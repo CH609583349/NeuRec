@@ -75,17 +75,17 @@ class HRM(AbstractRecommender):
                 concat_user_item = tf.concat([tf.expand_dims(user_embedding,1),tf.expand_dims(item_embedding_recent,1)],axis=1) 
             if self.pre_agg == "max":
                 hybrid_user_embedding = self.max_pooling(concat_user_item)
-            elif self.session_agg == "avg":
+            elif self.pre_agg == "avg":
                 hybrid_user_embedding = self.avg_pooling(concat_user_item)
-            return user_embedding, item_embedding,item_embedding_recent,\
-            tf.multiply(hybrid_user_embedding, item_embedding)
+            predict_vector = tf.multiply(hybrid_user_embedding, item_embedding)
+            predict = tf.reduce_sum(predict_vector,1)
+            return user_embedding, item_embedding,item_embedding_recent,predict
+            
 
     def _create_loss(self):
         with tf.name_scope("loss"):
             # loss for L(Theta)
-            p1,q1,r1,predict_vector = self._create_inference()
-            prediction = tf.layers.dense(inputs=predict_vector,units=1, activation=tf.nn.sigmoid)
-            self.output = tf.squeeze(prediction)
+            p1,q1,r1,self.output = self._create_inference()
             self.loss = learner.pointwise_loss(self.loss_function,self.lables,self.output) + self.reg_mf * (tf.reduce_sum(tf.square(p1)) \
             +tf.reduce_sum(tf.square(r1))+ tf.reduce_sum(tf.square(q1)))
 

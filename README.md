@@ -129,7 +129,26 @@ Collaborative Autoencoders. WWW 2019.
     <td>       Xiangnan He, et al., Adversarial Personalized Ranking for Recommendation. SIGIR 2018.
      </td>
   </tr>	
-	
+    </tr>
+     <tr>
+    <td scope="row">SpectralCF</td>
+    <td>       Lei Zheng, et al., Spectral Collaborative Filtering. RecSys 2018.
+     </td>
+  </tr>	
+  </tr>	
+    </tr>
+     <tr>
+    <td scope="row">NGCF</td>
+    <td>       Xiang Wang, et al., Neural Graph Collaborative Filtering. SIGIR 2019.
+     </td>
+  </tr>	
+  </tr>	
+    </tr>
+     <tr>
+    <td scope="row">WRMF</td>
+    <td>       Yifan Hu, et al., Collaborative Filtering for Implicit Feedback Datasets. ICDM 2008.
+     </td>
+  </tr>		
 	
   </table>
 

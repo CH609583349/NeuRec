@@ -78,12 +78,11 @@ class NeuMF(AbstractRecommender):
                 activation=tf.nn.relu)
     
             # Concatenate MF and MLP parts
-            predict_vector = tf.concat([mf_vector, mlp_vector],axis=1)
-            output = tf.nn.sigmoid(tf.reduce_sum(predict_vector,axis=1))
-            return mf_user_latent,mf_item_latent,mlp_user_latent,mlp_item_latent,output
+            predict = tf.reduce_sum(tf.concat([mf_vector, mlp_vector],axis=1),1)
+            return mf_user_latent,mf_item_latent,mlp_user_latent,mlp_item_latent,predict
     def _create_loss(self):
         with tf.name_scope("loss"):
-            p1, q1,m1,n1,self.output= self._create_inference(self.item_input)
+            p1, q1,m1,n1,self.output = self._create_inference(self.item_input)
             if self.ispairwise.lower() =="true":
                 _, q2,_,n2,output_neg = self._create_inference(self.item_input_neg)
                 result = self.output - output_neg
